@@ -9,8 +9,9 @@ st.set_page_config(page_title="YouTube AI Retention & Content Analyzer", layout=
 st.title("🎬 YouTube AI Video & İzleyici Etkileşim Analizörü")
 st.caption("YouTube linkini yapıştırın; izlenmenin nerede arttığını ve sonraki videolar için tavsiyeleri AI çıkarsın.")
 
-# API Key ve Girişler
-api_key = st.sidebar.text_input("Gemini API Key Giriniz:", type="password")
+# API Key'i Streamlit Secrets'tan (Gizli Değişkenlerden) alıyoruz
+api_key = st.secrets.get("GEMINI_API_KEY")
+
 youtube_url = st.text_input("YouTube Video URL / Linki:")
 
 def extract_video_id(url):
@@ -20,7 +21,7 @@ def extract_video_id(url):
 
 if st.button("Analiz Et") and youtube_url:
     if not api_key:
-        st.error("Lütfen sol menüden Gemini API anahtarınızı girin.")
+        st.error("Sistemde Gemini API anahtarı bulunamadı! Lütfen Streamlit Secrets ayarlarını kontrol edin.")
     else:
         video_id = extract_video_id(youtube_url)
         if not video_id:
@@ -28,11 +29,11 @@ if st.button("Analiz Et") and youtube_url:
         else:
             with st.spinner("Video transkripti çekiliyor ve AI analizi yapılıyor..."):
                 try:
-                    # 1. Transkript Çekme
-                    transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['tr', 'en'])
-                    full_text = ""
-                    time_stamped_text = ""
+                    # 1. Transkript Çekme (Güncellenmiş Kullanım)
+                    ytt = YouTubeTranscriptApi()
+                    transcript_list = ytt.fetch(video_id, languages=['tr', 'en'])
                     
+                    time_stamped_text = ""
                     for entry in transcript_list[:100]: # İlk bölüm örneklemesi
                         start_time = int(entry['start'])
                         minutes = start_time // 60
