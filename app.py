@@ -152,10 +152,10 @@ if st.button("🚀 Analizi Başlat"):
             with st.spinner("AI video içeriğini inceliyor ve 3 farklı blok raporunu oluşturuyor..."):
                 try:
                     genai.configure(api_key=api_key)
-                    # Düzeltilmiş Resmi Gemini Modeli
-                    model = genai.GenerativeModel('gemini-1.5-flash')
+                    
+                    # Garantili Güncel Model Adı
+                    model = genai.GenerativeModel('gemini-flash-latest')
 
-                    # Özel Ayrıştırıcı Yapı İsteği
                     prompt = f"""
                     Sen profesyonel bir YouTube Algoritma & İçerik Analistisin.
                     Aşağıdaki video metnini inceleyerek yanıtını tam olarak belirtilen özel etiketler (TAG) arasında Türkçe olarak ver.
