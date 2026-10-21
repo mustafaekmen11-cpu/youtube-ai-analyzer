@@ -62,7 +62,7 @@ if st.button("Analiz Et"):
             with st.spinner("AI Analizi yapılıyor..."):
                 try:
                     genai.configure(api_key=api_key)
-                    model = genai.GenerativeModel('gemini-2.5-flash')
+                    model = genai.GenerativeModel('gemini-3.8-flash')
 
                     prompt = f"""
                     Sen profesyonel bir YouTube İçerik ve Algoritma Danışmanısın.
