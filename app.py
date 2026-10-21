@@ -3,52 +3,46 @@ from youtube_transcript_api import YouTubeTranscriptApi
 import google.generativeai as genai
 import re
 
-# Sayfa Yapılandırması ve Teması
+# 1. Sayfa Yapılandırması ve Teması
 st.set_page_config(
     page_title="YouTube AI Retention & Critique Studio",
     layout="wide",
     page_icon="⚡"
 )
 
-# Özel CSS ile Modern Bloklu (Card UI) Tasarım ve Çerçeveler
+# 2. Özel CSS ile Modern Bloklu (Card UI) Tasarım ve Renkli Çerçeveler
 st.markdown("""
 <style>
     /* Ana Arka Plan */
     .stApp {
-        background-color: #0e1117;
+        background-color: #0b0e14;
         color: #ffffff;
     }
     
     /* Özel Kart (Blok) Stilleri */
     .custom-card {
-        background: #1e222d;
+        background: #161b26;
         border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #2e3545;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        padding: 24px;
+        border: 1px solid #283042;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         margin-bottom: 20px;
     }
     
     .critique-card {
-        background: #2a1b24;
+        background: #23151e;
         border: 1px solid #ff4b4b;
         border-radius: 12px;
-        padding: 20px;
+        padding: 24px;
         margin-bottom: 20px;
-    }
-    
-    .success-card {
-        background: #1b2a24;
-        border: 1px solid #00c853;
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 20px;
+        box-shadow: 0 0 15px rgba(255, 75, 75, 0.2);
     }
     
     .card-title {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 10px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 12px;
     }
     
     /* Buton Tasarımı */
@@ -56,20 +50,21 @@ st.markdown("""
         background: linear-gradient(90deg, #ff4b4b 0%, #ff8c00 100%);
         color: white;
         font-weight: bold;
+        font-size: 16px;
         border: none;
         border-radius: 8px;
-        padding: 12px 24px;
+        padding: 14px 28px;
         width: 100%;
         transition: all 0.3s ease;
     }
     .stButton>button:hover {
         transform: scale(1.02);
-        box-shadow: 0 5px 15px rgba(255, 75, 75, 0.4);
+        box-shadow: 0 5px 20px rgba(255, 75, 75, 0.4);
     }
 </style>
 """, unsafe_allow_html=True)
 
-st.title("⚡ YouTube AI Retention & İvme Analizörü")
+st.title("⚡ YouTube AI Retention & İvme Analizörü Pro")
 st.caption("Videodaki ivme kayıplarını, sıkıcı noktaları tespit edin ve yapay zeka eleştirileriyle sonraki videolarınızı geliştirin.")
 
 # API Key'i Streamlit Secrets'tan alıyoruz
@@ -120,9 +115,9 @@ if st.button("🔥 İvme Kayıplarını & Videoyu Analiz Et"):
         else:
             st.error("Lütfen bir YouTube linki girin veya metin yapıştırın.")
 
-        # 2. AI İvme & Eleştiri Analizi
+        # 2. AI İvme & Eleştiri Analiz Süreci
         if time_stamped_text:
-            with st.spinner("AI videonun ivme kayıplarını ve tempo düşüşlerini analiz ediyor..."):
+            with st.spinner("Yapay zeka videonun ivme kayıplarını ve tempo düşüşlerini analiz ediyor..."):
                 try:
                     genai.configure(api_key=api_key)
                     model = genai.GenerativeModel('gemini-3.8-flash')
@@ -135,20 +130,23 @@ if st.button("🔥 İvme Kayıplarını & Videoyu Analiz Et"):
                     {time_stamped_text}
                     --- SONU ---
 
-                    Lütfen yanıtını tam olarak şu 4 ana başlık altında ve net bir dille Türkçe olarak ver:
+                    Lütfen yanıtını tam olarak şu 5 ana başlık altında ve net bir dille Türkçe olarak ver:
 
-                    1. **🚨 İVME KAYBI & TEMPO DÜŞÜŞÜ (ELEŞTİRİ):**
+                    🏆 **1. VİRAL POTANSİYEL SKORU (100 Üzerinden):** 
+                    - Puan ve neden bu puanı aldığının 2 cümlelik özeti.
+
+                    🚨 **2. İVME KAYBI & TEMPO DÜŞÜŞÜ (ELEŞTİRİ):**
                     - Hangi dakikalarda/kısımlarda video ivme kaybediyor? 
                     - İzleyici nerede sıkılıp videoyu kapatır? Sert ve açık bir dille eleştir.
 
-                    2. **🔥 VİRAL KANCALAR (EN GÜÇLÜ ANLAR):**
-                    - Temponun yüksek olduğu, izleyiciyi tutan 2-3 kilit an nedir?
+                    🔥 **3. VİRAL KANCALAR (EN GÜÇLÜ ANLAR):**
+                    - Temponun yüksek olduğu, izleyiciyi tutan kilit anlar nedir?
 
-                    3. **🎯 DÜZELTME & AKSIYON PLANLARI:**
+                    💡 **4. DÜZELTME & AKSIYON PLANLARI:**
                     - Bu ivme kayıplarını engellemek için kurguda/senaryoda ne değiştirilmeliydi?
 
-                    4. **🚀 GELECEK VİDEO İÇİN TABAN & FORMAT FİKRİ:**
-                    - Bu hatalardan ders çıkararak bir sonraki videoda uygulanacak 1 adet eksiksiz kurgu/format fikri.
+                    🚀 **5. GELECEK VİDEO İÇİN TABAN & 3 VİRAL BAŞLIK:**
+                    - Bu hatalardan ders çıkararak uygulanacak 1 adet kurgu fikri ve 3 adet tıklanma oranı yüksek başlık/thumbnail konsepti.
                     """
 
                     response = model.generate_content(prompt)
@@ -164,7 +162,7 @@ if st.button("🔥 İvme Kayıplarını & Videoyu Analiz Et"):
                             st.video(f"https://www.youtube.com/watch?v={video_id}")
                         else:
                             st.markdown('<div class="custom-card"><div class="card-title">📌 Analiz Edilen Metin</div></div>', unsafe_allow_html=True)
-                            st.text_area("", time_stamped_text, height=350, disabled=True)
+                            st.text_area("", time_stamped_text, height=380, disabled=True)
 
                     with col_right:
                         st.markdown(f'<div class="critique-card"><div class="card-title">📊 AI İvme Kaybı & Eleştiri Raporu</div>{ai_output}</div>', unsafe_allow_html=True)
@@ -172,7 +170,7 @@ if st.button("🔥 İvme Kayıplarını & Videoyu Analiz Et"):
                         st.download_button(
                             label="📥 Eleştiri Raporunu İndir (.txt)",
                             data=ai_output,
-                            file_name="YouTube_Ivme_Kayıp_Raporu.txt",
+                            file_name="YouTube_Ivme_Kayip_Raporu.txt",
                             mime="text/plain"
                         )
 
