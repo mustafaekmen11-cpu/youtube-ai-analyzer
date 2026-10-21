@@ -152,7 +152,7 @@ if st.button("🚀 Analizi Başlat"):
             with st.spinner("AI video içeriğini inceliyor ve 3 farklı blok raporunu oluşturuyor..."):
                 try:
                     genai.configure(api_key=api_key)
-                    # Limitlere takılmamak için en kararlı modellerden biri
+                    # Düzeltilmiş Resmi Gemini Modeli
                     model = genai.GenerativeModel('gemini-1.5-flash')
 
                     # Özel Ayrıştırıcı Yapı İsteği
